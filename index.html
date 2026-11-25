@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IFFI’57 Media Updates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1a2a9c; --navy-deep:#101b6e; --ink:#0e1550; --paper:#f6f7fc; --card:#ffffff;
+    --muted:#6b7199; --line:#e3e6f3;
+    --pc:#e0701c; --rc:#d22f5a; --mc:#139a73;
+    --gold:#ffc83d; --pink:#ff3d9a; --green:#1fc46b; --red:#ff4b3a;
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+  /* ---------- header ---------- */
+  header{background:radial-gradient(120% 140% at 85% -10%, #3b4fd6 0%, var(--navy) 45%, var(--navy-deep) 100%);color:#fff;padding:28px 18px 0;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;right:-40px;top:-30px;width:220px;height:220px;opacity:.18;
+    background:radial-gradient(circle at 50% 50%,#fff 0 2px,transparent 3px) 0 0/22px 22px;border-radius:50%}
+  .wrap{max-width:860px;margin:0 auto}
+  h1{margin:0;font-size:clamp(28px,6vw,44px);font-weight:800;letter-spacing:-.5px;line-height:1.05}
+  h1 em{font-style:italic;font-weight:700;color:var(--gold)}
+  .sub{margin:6px 0 0;opacity:.85;font-size:15px}
+  .stars{display:flex;gap:6px;margin:18px 0 0;overflow:hidden;height:16px}
+  .stars span{flex:0 0 14px;height:14px;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+  .days{display:flex;gap:8px;margin-top:18px;overflow-x:auto;padding-bottom:16px;scrollbar-width:none}
+  .days button{flex:0 0 auto;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;font:inherit;font-size:14px;padding:8px 14px;border-radius:999px;cursor:pointer}
+  .days button.on{background:#fff;color:var(--navy);font-weight:600;border-color:#fff}
+
+  /* ---------- toolbar ---------- */
+  .bar{position:sticky;top:0;z-index:5;background:rgba(246,247,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 18px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:#fff;color:var(--ink);font:inherit;font-size:13px;padding:7px 12px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:6px}
+  .chip i{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .progress{margin-left:auto;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .meter{width:90px;height:6px;border-radius:9px;background:var(--line);overflow:hidden}
+  .meter b{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--gold));width:0;transition:width .3s}
+
+  /* ---------- next-up ---------- */
+  .next{margin:18px auto 0;max-width:860px;padding:0 18px}
+  .next .box{background:linear-gradient(90deg,#fff7e0,#fff);border:1px solid #f4e2a8;border-radius:var(--radius);padding:12px 16px;font-size:14px;display:flex;gap:10px;align-items:center}
+  .next .dot{width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(255,75,58,.6);animation:pulse 1.6s infinite;flex:0 0 auto}
+  @keyframes pulse{70%{box-shadow:0 0 0 10px rgba(255,75,58,0)}100%{box-shadow:0 0 0 0 rgba(255,75,58,0)}}
+
+  /* ---------- timeline ---------- */
+  main{padding:8px 18px 80px}
+  .slot{display:grid;grid-template-columns:76px 1fr;gap:14px;margin-top:22px}
+  .slot .time{font-weight:700;font-size:15px;color:var(--navy);padding-top:14px;text-align:right;position:relative}
+  .slot .time small{display:block;font-weight:500;font-size:11px;color:var(--muted)}
+  .cards{display:flex;flex-direction:column;gap:12px;border-left:2px dashed var(--line);padding-left:14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;position:relative;transition:opacity .2s, transform .2s}
+  .card::before{content:"";position:absolute;left:-23px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--c);border:3px solid var(--paper)}
+  .card.pc{--c:var(--pc)} .card.rc{--c:var(--rc)} .card.mc{--c:var(--mc)} .card.all{--c:var(--navy)}
+  .card.past{opacity:.55}
+  .card.done{opacity:.7}
+  .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);padding:3px 8px;border-radius:6px}
+  .card h3{margin:8px 0 2px;font-size:18px;line-height:1.25}
+  .meta{font-size:13px;color:var(--muted)}
+  .people{margin:8px 0 0;font-size:13.5px;line-height:1.5}
+  .upd{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .upd label{display:flex;align-items:center;gap:7px;font-size:13px;border:1px solid var(--line);border-radius:10px;padding:6px 10px;cursor:pointer;user-select:none}
+  .upd input{accent-color:var(--green);width:16px;height:16px}
+  .upd label.due{border-color:var(--red);background:#fff1ef}
+  .link{margin-top:10px;display:flex;gap:6px}
+  .link input{flex:1;min-width:0;font:inherit;font-size:13px;border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+  .link input:focus{outline:2px solid var(--pc);border-color:transparent}
+  .actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .btn{font:inherit;font-size:14px;font-weight:600;border:0;border-radius:12px;padding:10px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+  .btn.copy{background:var(--ink);color:#fff}
+  .btn.copy.ok{background:var(--green)}
+  .btn.wa{background:#25d366;color:#fff;text-decoration:none}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+  pre.msg{display:none;white-space:pre-wrap;word-wrap:break-word;font-family:inherit;font-size:13px;line-height:1.5;background:#f3f5fb;border-radius:12px;padding:12px 14px;margin:12px 0 0;max-height:380px;overflow:auto}
+  .card.open pre.msg{display:block}
+  .warn{color:#b3261e;font-size:12px;margin-top:6px}
+
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;transition:transform .25s;z-index:20}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
+  @media (max-width:520px){
+    .slot{grid-template-columns:58px 1fr;gap:10px}
+    .slot .time{font-size:13px}
+    .progress{margin-left:0;width:100%}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>IFFI’<em>57</em> Media Updates</h1>
+    <p class="sub" id="sub"></p>
+    <div class="stars" id="stars"></div>
+    <div class="days" id="days"></div>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="chips" id="chips"></div>
+    <div class="progress"><span id="count"></span><div class="meter"><b id="meter"></b></div></div>
+  </div>
+</div>
+
+<div class="next" id="next"></div>
+<main class="wrap" id="list"></main>
+<footer>1st update: 30–20 min before · 2nd update: 5 min before · every update names the participants · press conferences carry the live link</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================================
+   DATA — add a new day by copying a block in DAYS.
+   time/end: 24-hour "HH:MM". type: pc | rc | mc.
+   ===================================================================== */
+const DAYS = [
+{
+  id: "2026-11-26", label: "Day 6", date: "Thursday, 26 November 2026",
+  events: [
+    {time:"10:30", type:"rc", title:"Woodworm (Roto)", section:"Goan", venue:"Audi 3", people:["Akhil Lotlikar – Director"]},
+    {time:"11:00", end:"11:30", type:"pc", title:"Skylark", section:"International Cinema", lang:"Kyrgyz", people:["Narghiza Dotieva – Director","Gulnara Kasmambetova – Producer"]},
+    {time:"11:00", type:"rc", title:"Ulididdu Sampige Maatra", section:"Indian Panorama", venue:"Audi 2", people:["Abhishek"]},
+    {time:"11:15", type:"rc", title:"Scroll", section:"Indian Panorama", venue:"Audi 2", people:["Kannan S"]},
+    {time:"11:30", end:"13:00", type:"mc", kind:"Masterclass", label:"MASTERCLASS – THE CASTING MAGIC", title:"The Casting Magic: Auditions Unplugged", venue:"Kala Academy, Goa", people:["Mukesh Chhabra"]},
+    {time:"11:30", type:"rc", title:"Cheers", section:"Goan", venue:"Audi 4", people:["Anurag Verdekar – Director"]},
+    {time:"12:00", end:"12:30", type:"pc", title:"The Unseen Holy River – Saraswati", section:"Indian Panorama", lang:"Hindi", people:["Bhasker Vishwanathan – Director","Abhinav M Jain – Producer"]},
+    {time:"12:00", type:"rc", title:"Far From The Trees", section:"International Films", venue:"Audi 1", people:["Mayca Sanz – Producer","Iris Martin Peralta – Co-Producer"]},
+    {time:"12:30", end:"13:00", type:"pc", title:"The Hug of Emptiness", section:"Indian Panorama", lang:"Kannada", people:["Dr. Pradeep Kenchanuru – Director","Pawan Wadeyar – Producer"]},
+    {time:"12:30", type:"rc", title:"Medium Piece", section:"Goan", venue:"Audi 4", people:["Jay Amonkar – Director"]},
+    {time:"14:15", type:"rc", title:"Ajayante Maranam: Oru Case Study", section:"Indian Panorama", venue:"Audi 4", people:["Sreehari Haridas"]},
+    {time:"14:30", end:"16:00", type:"mc", kind:"Masterclass", label:"MASTERCLASS – DECODING ACADEMY AWARDS", title:"Decoding Academy Awards", venue:"Kala Academy, Goa", people:["Natalie Wade"]},
+    {time:"14:30", type:"rc", title:"Kantara A Legend Chapter 1", section:"Indian Panorama", venue:"Audi 1", people:["Rishab Shetty"]},
+    {time:"14:45", type:"rc", title:"A Family", section:"International Films", venue:"Audi 1", people:["Mees Peijnenburg – Director","Pieter Embrechts"]},
+    {time:"15:00", end:"15:30", type:"pc", title:"A Few Days in the Sun", section:"International Cinema", lang:"English / Spanish", people:["Mauro Mueller – Director","José David Figueroa García – Writer","Leslie Holleran – Producer"]},
+    {time:"15:15", type:"rc", title:"Echoes of the Last Shelter", section:"Indian Panorama", venue:"Audi 2", people:[]},
+    {time:"15:35", type:"rc", title:"Paro – The Untold Story of Bride Slavery", section:"Indian Panorama", venue:"Audi 2", people:["Gajendra Ahire"]},
+    {time:"16:00", end:"16:30", type:"pc", title:"ICFT Jury Press Conference", section:"International Cinema", team:"the ICFT Jury Members", people:["ICFT Jury Members"]},
+    {time:"16:00", type:"rc", title:"Now I Met Her", section:"Gala Premieres", venue:"Audi 4", people:["Luxi Xiao – Director"]},
+    {time:"16:15", type:"rc", title:"Come With Me", section:"International Films", venue:"Audi 3", people:["João Lameira – Director","Daniel Pereira – Producer","António Simão – Actor"]},
+    {time:"17:00", end:"17:30", type:"pc", title:"Scroll", section:"Indian Panorama", lang:"Tamil", people:["Kannan S – Director / Producer","Aravind Sundar – Actor","Kavya Anil – Actor"]},
+    {time:"17:00", type:"rc", title:"Tu Aahes Na", section:"Gala Premieres", venue:"Audi 1", people:["Deepak Gawade – Director","Ankur Garg – Producer","Supriya Pligaonkar – Actress","Siddarth Rodke – Actor"]},
+    {time:"17:30", end:"18:00", type:"pc", title:"Ajayante Maranam: Oru Case Study", section:"Indian Panorama", lang:"Malayalam", people:["Sreehari Haridas – Director"]},
+    {time:"17:30", type:"rc", title:"Kabir Sir Ka Akhri Lesson", section:"Indian Panorama", venue:"Audi 2", people:["Sarfaraz"]},
+    {time:"17:45", type:"rc", title:"Arivu", section:"Indian Panorama", venue:"Audi 3", people:["Sathyashiva"]},
+    {time:"18:00", type:"rc", title:"MIFF Films", section:"Indian Panorama", venue:"Audi 4", films:["Silver","Maya’s Song","Waai","Small Clouds","Armstrong From Angalamman Temple Street"], people:[]}
+  ]
+}
+];
+
+/* ===================== helpers ===================== */
+const TYPES = {pc:{name:"Press Conference",color:"var(--pc)"}, rc:{name:"Red Carpet",color:"var(--rc)"}, mc:{name:"Masterclass",color:"var(--mc)"}};
+const toMin = t => { const [h,m]=t.split(":").map(Number); return h*60+m; };
+const fmt = min => { let h=Math.floor(min/60), m=min%60; const ap=h>=12?"PM":"AM"; h=h%12||12; return `${h}:${String(m).padStart(2,"0")} ${ap}`; };
+const fmtShort = min => fmt(min).replace(/ (AM|PM)$/,"");
+const clock = min => { const h=Math.floor(min/60)%12||12, m=min%60;
+  const full="🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛", half="🕜🕝🕞🕟🕠🕡🕢🕣🕤🕥🕦🕧";
+  return [...(m<30?full:half)][h-1]; };
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const store = {
+  get(k,d){ try{ const v=localStorage.getItem(k); return v===null?d:JSON.parse(v);}catch(e){return d;} },
+  set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+};
+
+/* ===================== message templates ===================== */
+function msgPC(e, link){
+  const s=toMin(e.time), en=e.end?toMin(e.end):s+30;
+  const team = e.team || `the team of “${e.title}”`;
+  let L=["📢 IFFI 2026 | PRESS CONFERENCE","","Dear Media Delegates,","",
+    `A press conference featuring ${team} under the ${e.section} section is scheduled as follows:`,""];
+  if(e.lang) L.push(`🎬 Film: ${e.title}`,`🌐 Language: ${e.lang}`,"");
+  L.push(`${clock(s)} Time: ${fmt(s)} – ${fmt(en)}`,"","👥 Panelists:","",...e.people.map(p=>`- ${p}`),"",
+    `All media delegates are invited to attend the press conference and interact with the ${e.lang?"film's team":"jury"}.`,"",
+    " *Watch live* ", link || "[PASTE LIVE LINK]","","","Team IFFI 2026");
+  return L.join("\n");
+}
+function msgRC(e){
+  let L=[`*🎬✨ RED CARPET | ${e.title.toUpperCase()} ✨🎬*`,"","Dear Media Delegates,",""];
+  if(e.films){
+    const list=e.films.map(f=>`‘${f}’`); const last=list.pop();
+    L.push(`You are cordially invited to cover the Red Carpet of the films ${list.join(", ")} and ${last} under the ${e.section} section at the 57th International Film Festival of India (IFFI).`,"",
+      `🎞️ *Films*: ${e.films.join(", ")}`,"");
+  } else {
+    L.push(`You are cordially invited to cover the Red Carpet of the film ‘${e.title}’ under the ${e.section} section at the 57th International Film Festival of India (IFFI).`,"",
+      `🎞️ *Film*: ${e.title}`,"");
+  }
+  L.push(`⏰ *Time*: ${fmt(toMin(e.time))}`,"",`📍 *Venue*: ${e.venue}, PVR INOX`,"");
+  if(e.people.length) L.push("*🌟 On the Red Carpet:*","",...e.people.map(p=>`• ${p}`),"");
+  L.push("📸 All media delegates are requested to assemble at the venue on time to capture the Red Carpet moments.","","🎤 Team IFFI 🎬");
+  return L.join("\n");
+}
+function mcBlock(e,i){
+  const s=toMin(e.time), en=e.end?toMin(e.end):s+90;
+  const L=[`${i}. ${e.label}`,"",`🎥 Topic: ${e.title}`,"",`${clock(s)} Time: ${fmt(s)} – ${fmt(en)}`,"",`📍 Venue: ${e.venue}`,"",
+    `🎤 ${e.people.length>1?"Speakers":"Speaker"}: ${e.people.join(", ")}`];
+  if(e.moderator) L.push("",`🎙️ Moderator: ${e.moderator}`);
+  return L.join("\n");
+}
+function msgMC(list){
+  return ["🎬 IFFI 2026 | MASTERCLASSES & SPECIAL SESSIONS","","Dear Media Delegates,","",
+    "Please find below the schedule of masterclasses and special sessions:","",
+    list.map((e,i)=>mcBlock(e,i+1)).join("\n\n")].join("\n");
+}
+
+/* ===================== state & render ===================== */
+let dayIdx = Math.max(0, DAYS.findIndex(d=>d.id===todayISO())); if(dayIdx<0) dayIdx=DAYS.length-1;
+let filter = "all";
+const openSet = new Set();
+function todayISO(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
+const day = () => DAYS[dayIdx];
+const key = (e,i,what) => `iffi57:${day().id}:${i}:${what}`;
+
+function messageFor(e,i){
+  if(e.type==="pc") return msgPC(e, store.get(key(e,i,"link"),""));
+  if(e.type==="rc") return msgRC(e);
+  return msgMC([e]);
+}
+
+function render(){
+  const d=day();
+  document.getElementById("sub").textContent = `${d.label} · ${d.date}`;
+  document.getElementById("days").innerHTML = DAYS.map((x,i)=>`<button class="${i===dayIdx?"on":""}" data-day="${i}">${x.label} · ${x.date.split(",")[1]||x.date}</button>`).join("");
+  document.getElementById("days").style.display = DAYS.length>1?"flex":"none";
+
+  const counts={all:d.events.length,pc:0,rc:0,mc:0}; d.events.forEach(e=>counts[e.type]++);
+  document.getElementById("chips").innerHTML = [["all","All"],["pc","Press Conferences"],["rc","Red Carpets"],["mc","Masterclasses"]]
+    .filter(([k])=>counts[k]).map(([k,n])=>`<button class="chip ${filter===k?"on":""}" data-f="${k}">${k!=="all"?`<i style="background:${TYPES[k].color}"></i>`:""}${n} · ${counts[k]}</button>`).join("");
+
+  const isToday = d.id===todayISO();
+  const now = new Date(); const nowMin = now.getHours()*60+now.getMinutes();
+
+  // group by time
+  const groups={};
+  d.events.forEach((e,i)=>{ if(filter!=="all"&&filter!==e.type) return; (groups[e.time]=groups[e.time]||[]).push([e,i]); });
+
+  let html="";
+  const mcs=d.events.filter(e=>e.type==="mc");
+  if(mcs.length>1 && (filter==="all"||filter==="mc")){
+    html+=`<div class="slot"><div class="time">Morning<small>all sessions</small></div><div class="cards">
+      <div class="card all" data-all="1"><span class="tag">All masterclasses · one message</span>
+      <h3>Masterclasses &amp; Special Sessions</h3><div class="meta">${mcs.length} sessions · send with the 8:00 AM / 11:30 AM bulletins</div>
+      <div class="actions"><button class="btn copy" data-copyall="1">📋 Copy message</button>
+      <a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(msgMC(mcs))}">WhatsApp</a>
+      <button class="btn ghost" data-toggle="1">Preview</button></div>
+      <pre class="msg">${esc(msgMC(mcs))}</pre></div></div></div>`;
+  }
+
+  Object.keys(groups).sort((a,b)=>toMin(a)-toMin(b)).forEach(t=>{
+    const s=toMin(t);
+    html+=`<div class="slot"><div class="time">${fmtShort(s)}<small>${s>=720?"PM":"AM"}</small></div><div class="cards">`;
+    groups[t].forEach(([e,i])=>{
+      const T=TYPES[e.type];
+      const u1=store.get(key(e,i,"u1"),false), u2=store.get(key(e,i,"u2"),false);
+      const past = isToday && nowMin > s;
+      const due1 = isToday && !u1 && nowMin>=s-30 && nowMin<=s;
+      const due2 = isToday && !u2 && nowMin>=s-5 && nowMin<=s;
+      const slot = e.end?`${fmt(s)} – ${fmt(toMin(e.end))}`:fmt(s);
+      const venue = e.type==="pc"?"PC Hall, INOX Panjim":e.type==="rc"?`${e.venue}, PVR INOX`:e.venue;
+      const sub = e.type==="pc"&&e.lang?` · ${e.lang}`:"";
+      const names = e.films? `<b>Films:</b> ${e.films.map(esc).join(", ")}` :
+                   e.people.length? e.people.map(esc).join("<br>") : `<span class="meta">No names on the poster</span>`;
+      const msg=messageFor(e,i);
+      html+=`<div class="card ${e.type} ${past?"past":""} ${u1&&u2?"done":""} ${openSet.has(i)?"open":""}" data-i="${i}">
+        <span class="tag">${e.type==="mc"?esc(e.kind||T.name):T.name}</span>
+        <h3>${e.films?"MIFF Films":esc(e.title)}</h3>
+        <div class="meta">${slot} · ${esc(venue)} · ${esc(e.section||"")}${esc(sub)}</div>
+        <div class="people">${names}</div>
+        <div class="upd">
+          <label class="${due1?"due":""}"><input type="checkbox" data-u="u1" ${u1?"checked":""}>1st · ${fmtShort(s-30)}–${fmtShort(s-20)}</label>
+          <label class="${due2?"due":""}"><input type="checkbox" data-u="u2" ${u2?"checked":""}>2nd · ${fmtShort(s-5)}</label>
+        </div>
+        ${e.type==="pc"?`<div class="link"><input type="url" placeholder="Paste YouTube live link" value="${esc(store.get(key(e,i,"link"),""))}" data-link></div>`:""}
+        <div class="actions">
+          <button class="btn copy" data-copy>📋 Copy message</button>
+          <a class="btn wa" target="_blank" rel="noopener" data-wa href="https://wa.me/?text=${encodeURIComponent(msg)}">WhatsApp</a>
+          <button class="btn ghost" data-toggle>${openSet.has(i)?"Hide":"Preview"}</button>
+        </div>
+        ${e.type==="pc"&&!store.get(key(e,i,"link"),"")?`<div class="warn">Live link not added yet</div>`:""}
+        <pre class="msg">${esc(msg)}</pre>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+  document.getElementById("list").innerHTML = html || `<p class="meta" style="margin-top:30px">No events.</p>`;
+  updateProgress(); updateNext();
+}
+
+function updateProgress(){
+  const d=day(); let done=0; const total=d.events.length*2;
+  d.events.forEach((e,i)=>{ if(store.get(key(e,i,"u1"),false)) done++; if(store.get(key(e,i,"u2"),false)) done++; });
+  document.getElementById("count").textContent=`${done} / ${total} updates sent`;
+  document.getElementById("meter").style.width=`${total?done/total*100:0}%`;
+}
+
+function updateNext(){
+  const d=day(), box=document.getElementById("next");
+  if(d.id!==todayISO()){ box.innerHTML=""; return; }
+  const now=new Date(), n=now.getHours()*60+now.getMinutes();
+  const tasks=[];
+  d.events.forEach((e,i)=>{ const s=toMin(e.time);
+    if(!store.get(key(e,i,"u1"),false)) tasks.push({at:s-30,what:"1st update",e});
+    if(!store.get(key(e,i,"u2"),false)) tasks.push({at:s-5,what:"2nd update",e}); });
+  const live=tasks.filter(t=>t.at+ (t.what==="1st update"?10:5) >= n).sort((a,b)=>a.at-b.at)[0];
+  if(!live){ box.innerHTML=""; return; }
+  const name = live.e.films?"MIFF Films":live.e.title;
+  const when = live.at<=n ? "now" : `at ${fmt(live.at)}`;
+  box.innerHTML=`<div class="box"><span class="dot"></span><span><b>Next:</b> ${live.what} for <b>${esc(name)}</b> (${TYPES[live.e.type].name}) — ${when}</span></div>`;
+}
+
+/* ===================== copy ===================== */
+function copyText(txt, btn){
+  const done=()=>{ toast("Copied — paste it in WhatsApp"); if(btn){ const o=btn.innerHTML; btn.classList.add("ok"); btn.innerHTML="✓ Copied"; setTimeout(()=>{btn.classList.remove("ok");btn.innerHTML=o;},1600);} };
+  if(navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(txt).then(done).catch(()=>fallback(txt)&&done()); }
+  else if(fallback(txt)) done();
+}
+function fallback(txt){
+  const ta=document.createElement("textarea"); ta.value=txt; ta.style.position="fixed"; ta.style.opacity="0";
+  document.body.appendChild(ta); ta.select(); let ok=false; try{ ok=document.execCommand("copy"); }catch(e){} ta.remove();
+  if(!ok) toast("Copy blocked — use Preview and copy by hand"); return ok;
+}
+let tt; function toast(t){ const el=document.getElementById("toast"); el.textContent=t; el.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove("show"),1800); }
+
+/* ===================== events ===================== */
+document.addEventListener("click",ev=>{
+  const t=ev.target.closest("button,[data-day]"); if(!t) return;
+  if(t.dataset.day){ dayIdx=+t.dataset.day; render(); return; }
+  if(t.dataset.f){ filter=t.dataset.f; render(); return; }
+  const card=t.closest(".card"); if(!card) return;
+  if(t.hasAttribute("data-toggle")){ card.classList.toggle("open"); const op=card.classList.contains("open"); t.textContent=op?"Hide":"Preview"; if(card.dataset.i!==undefined){ op?openSet.add(+card.dataset.i):openSet.delete(+card.dataset.i);} return; }
+  if(t.dataset.copyall){ copyText(msgMC(day().events.filter(e=>e.type==="mc")),t); return; }
+  if(t.hasAttribute("data-copy")){ const i=+card.dataset.i; copyText(messageFor(day().events[i],i),t); }
+});
+document.addEventListener("change",ev=>{
+  const t=ev.target, card=t.closest(".card"); if(!card||!t.dataset.u) return;
+  const i=+card.dataset.i; store.set(key(day().events[i],i,t.dataset.u),t.checked); render();
+});
+document.addEventListener("input",ev=>{
+  const t=ev.target; if(!t.hasAttribute("data-link")) return;
+  const card=t.closest(".card"), i=+card.dataset.i, e=day().events[i];
+  store.set(key(e,i,"link"),t.value.trim());
+  const msg=messageFor(e,i);
+  card.querySelector("pre.msg").textContent=msg;
+  card.querySelector("[data-wa]").href="https://wa.me/?text="+encodeURIComponent(msg);
+  const w=card.querySelector(".warn"); if(w) w.style.display=t.value.trim()?"none":"";
+});
+
+/* stars strip */
+(function(){ const c=["--green","--red","--gold","--pink","--gold","--green","--red"]; let h="";
+  for(let i=0;i<80;i++) h+=`<span style="background:var(${c[i%c.length]})"></span>`; document.getElementById("stars").innerHTML=h; })();
+
+render();
+setInterval(()=>{ const a=document.activeElement; if(day().id===todayISO() && !(a && a.tagName==="INPUT" && a.type==="url")) render(); }, 60000);
+</script>
+</body>
+</html>
