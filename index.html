@@ -151,9 +151,41 @@ const DAYS = [
     {time:"17:45", type:"rc", title:"Arivu", section:"Indian Panorama", venue:"Audi 3", people:["Sathyashiva"]},
     {time:"18:00", type:"rc", title:"MIFF Films", section:"Indian Panorama", venue:"Audi 4", films:["Silver","Maya’s Song","Waai","Small Clouds","Armstrong From Angalamman Temple Street"], people:[]}
   ]
+},
+{
+  id: "2026-11-27", label: "Day 7", date: "Friday, 27 November 2026",
+  events: [
+    {time:"11:00", end:"11:30", type:"pc", title:"Paris Paris", section:"International Cinema", lang:"English, French, Mandarin-Chinese", people:["Isabelle Tollenaere – Director"]},
+    {time:"11:00", type:"rc", title:"Demography is Destiny", section:"Indian Panorama", venue:"Audi 2", people:["Kamakhya Narayan Singh","Anshuman Shekhar"]},
+    {time:"11:15", type:"rc", title:"The Kerala Story 2 Goes Beyond", section:"Indian Panorama", venue:"Audi 2", people:["Kamakhya Narayan Singh"]},
+    {time:"11:30", end:"13:00", type:"mc", kind:"Panel Discussion", label:"PANEL DISCUSSION – THE LEGENDARY 25s", title:"The Legendary 25s", venue:"Kala Academy, Goa", people:["Farhan Akhtar","Ashutosh Gowariker","Madhur Bhandarkar"], moderator:"Khushboo Sundar"},
+    {time:"11:30", type:"rc", title:"Hearing", section:"International Films", venue:"Audi 1", people:["Lai Weijie – Producer"]},
+    {time:"12:00", end:"12:30", type:"pc", title:"Paro – The Untold Story of Bride Slavery", section:"Indian Panorama", lang:"Hindi", people:["Gajendra Ahire – Director","Taha Shah – Actor","Trupti Bhoir – Actor / Producer","Shubhankar Vashisht"]},
+    {time:"12:15", type:"rc", title:"Echoes of Valour", section:"Gala Premieres", venue:"Audi 4", people:["Indira Dhar Mukherjee – Director","Divya Dutta – Actress"]},
+    {time:"12:30", end:"13:00", type:"pc", title:"Kabir Sir Ka Akhari Lesson", section:"Indian Panorama", lang:"Hindi", people:["Sarfaraz – Director"]},
+    {time:"12:45", type:"rc", title:"Shat-Shat Atal", section:"Indian Panorama", venue:"Audi 2", people:["Atul Pandey"]},
+    {time:"13:00", type:"rc", title:"Chandoba", section:"Indian Panorama", venue:"Audi 2", people:["Nipun Dharmadhikari"]},
+    {time:"14:15", type:"rc", title:"Pratyabartan", section:"Indian Panorama", venue:"Audi 3", people:["Samarpan Sengupta"]},
+    {time:"14:30", end:"16:00", type:"mc", kind:"Interview Session", label:"INTERVIEW SESSION – KARTHIK SUBBARAJ", title:"‘What if the Villain is Right?’ The Unconventional Filmmaker Karthik Subbaraj", venue:"Kala Academy, Goa", people:["Karthik Subbaraj"], moderator:"Sudhir Srinivasan"},
+    {time:"14:30", type:"rc", title:"3 Weeks After", section:"International Films", venue:"Audi 1", people:["Andrija Pavlović","Vladimir Arsenijević"]},
+    {time:"15:00", type:"rc", title:"Hanuman Ansh", section:"Indian Panorama", venue:"Audi 4", people:["Dr. Vishal Chaturvedi"]},
+    {time:"15:30", end:"16:00", type:"pc", title:"Come With Me", section:"International Cinema", lang:"Portuguese", people:["João Lameira – Director","António Simão – Actor","Daniel Pereira – Producer"]},
+    {time:"15:30", type:"rc", title:"Tighi", section:"Indian Panorama", venue:"Audi 4", people:["Jeejivisha Kale"]},
+    {time:"15:45", type:"rc", title:"Attappadi", section:"Indian Panorama", venue:"Audi 2", people:["Vijeesh Mani"]},
+    {time:"16:00", end:"17:00", type:"pc", title:"Demography is Destiny + The Kerala Story 2 Goes Beyond", section:"Indian Panorama",
+      parts:[{title:"Demography is Destiny", lang:"Hindi", people:["Kamakhya Narayan Singh – Director","Anshuman Shekhar – Director"]},
+             {title:"The Kerala Story 2 Goes Beyond", people:["Kamakhya Narayan Singh – Director","Rahul Suhas Hirwale – Music Composer"]}], people:[]},
+    {time:"16:10", type:"rc", title:"Birds on Ice", section:"Indian Panorama", venue:"Audi 2", people:[]},
+    {time:"16:30", type:"rc", title:"Sledge", section:"Indian Panorama", venue:"Audi 4", people:["Raja Shabir","Mohd Khan"]},
+    {time:"17:00", end:"17:30", type:"pc", title:"International Competition Jury", section:"International Cinema", team:"the International Competition Jury", people:["Aanand L Rai – Jury Chairperson","María Alejandra Rojas","Ratchapoom Boonbunchachoke","Sol Berruezo Pichon-Rivière","Bogdan Mureșanu"]},
+    {time:"17:00", type:"rc", title:"Panchayat S5 Ep 1", section:"Gala Premieres", venue:"Audi 1", people:["Deepak Kumar Mishra","Jitendra Kumar","Raghubir Yadav","Chandan Roy","Saanika","Faizal Malik","Neena Gupta"]},
+    {time:"17:30", end:"18:00", type:"pc", title:"The River Train", section:"International Cinema", lang:"Spanish", people:["Valentine Torre – Producer","Rita Pauls – Actress"]},
+    {time:"17:30", type:"rc", title:"Anesthesia", section:"International Films", venue:"Audi 3", people:["Jaro Vojtek","Mátyás Prikler","Tomáš Stanek"]},
+    {time:"18:00", type:"rc", title:"Sev Micchar", section:"Indian Panorama", venue:"Audi 2", people:["Muskan Asthana"]},
+    {time:"18:15", type:"rc", title:"Chennai Love Story", section:"Indian Panorama", venue:"Audi 3", people:["Ravi Varma Namburi"]}
+  ]
 }
 ];
-
 /* ===================== helpers ===================== */
 const TYPES = {pc:{name:"Press Conference",color:"var(--pc)"}, rc:{name:"Red Carpet",color:"var(--rc)"}, mc:{name:"Masterclass",color:"var(--mc)"}};
 const toMin = t => { const [h,m]=t.split(":").map(Number); return h*60+m; };
@@ -168,36 +200,46 @@ const store = {
   set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 };
 
-/* ===================== message templates ===================== */
+/* ===================== message templates (WhatsApp format) ===================== */
+const B = x => `*${String(x).trim()}*`;   // WhatsApp bold
 function msgPC(e, link){
   const s=toMin(e.time), en=e.end?toMin(e.end):s+30;
-  const team = e.team || `the team of “${e.title}”`;
-  let L=["📢 IFFI 2026 | PRESS CONFERENCE","","Dear Media Delegates,","",
-    `A press conference featuring ${team} under the ${e.section} section is scheduled as follows:`,""];
-  if(e.lang) L.push(`🎬 Film: ${e.title}`,`🌐 Language: ${e.lang}`,"");
-  L.push(`${clock(s)} Time: ${fmt(s)} – ${fmt(en)}`,"","👥 Panelists:","",...e.people.map(p=>`- ${p}`),"",
-    `All media delegates are invited to attend the press conference and interact with the ${e.lang?"film's team":"jury"}.`,"",
+  const when=`${fmt(s)} – ${fmt(en)}`;
+  let L=["📢 IFFI 2026 | PRESS CONFERENCE","","Dear Media Delegates,",""];
+  if(e.parts){                                   // two or more films in one press conference
+    L.push(`A press conference featuring the teams of ${e.parts.map(p=>`“${B(p.title)}”`).join(" and ")} under the ${e.section} section is scheduled as follows:`,"");
+    e.parts.forEach(p=>L.push(`🎬 Film: ${B(p.title)}`+(p.lang?`\n🌐 Language: ${p.lang}`:""),""));
+    L.push(`${clock(s)} Time: ${B(when)}`,"","👥 Panelists:","");
+    e.parts.forEach((p,k)=>{ L.push(B(p.title),...p.people.map(x=>`- ${x}`)); if(k<e.parts.length-1) L.push(""); });
+  } else if(e.team){                              // jury / non-film press conference
+    L.push(`A press conference featuring ${e.team} under the ${e.section} section is scheduled as follows:`,"",
+      `🎬 Session: ${B(e.title)}`,"",`${clock(s)} Time: ${B(when)}`,"","👥 Panelists:","",...e.people.map(p=>`- ${p}`));
+  } else {
+    L.push(`A press conference featuring the team of “${B(e.title)}” under the ${e.section} section is scheduled as follows:`,"",
+      `🎬 Film: ${B(e.title)}`,`🌐 Language: ${e.lang}`,"",`${clock(s)} Time: ${B(when)}`,"","👥 Panelists:","",...e.people.map(p=>`- ${p}`));
+  }
+  L.push("",`All media delegates are invited to attend the press conference and interact with the ${e.team?"jury":"film's team"}.`,"",
     " *Watch live* ", link || "[PASTE LIVE LINK]","","","Team IFFI 2026");
   return L.join("\n");
 }
 function msgRC(e){
   let L=[`*🎬✨ RED CARPET | ${e.title.toUpperCase()} ✨🎬*`,"","Dear Media Delegates,",""];
   if(e.films){
-    const list=e.films.map(f=>`‘${f}’`); const last=list.pop();
+    const list=e.films.map(f=>`‘${B(f)}’`); const last=list.pop();
     L.push(`You are cordially invited to cover the Red Carpet of the films ${list.join(", ")} and ${last} under the ${e.section} section at the 57th International Film Festival of India (IFFI).`,"",
-      `🎞️ *Films*: ${e.films.join(", ")}`,"");
+      `🎞️ *Films*: ${B(e.films.join(", "))}`,"");
   } else {
-    L.push(`You are cordially invited to cover the Red Carpet of the film ‘${e.title}’ under the ${e.section} section at the 57th International Film Festival of India (IFFI).`,"",
-      `🎞️ *Film*: ${e.title}`,"");
+    L.push(`You are cordially invited to cover the Red Carpet of the film ‘${B(e.title)}’ under the ${e.section} section at the 57th International Film Festival of India (IFFI).`,"",
+      `🎞️ *Film*: ${B(e.title)}`,"");
   }
-  L.push(`⏰ *Time*: ${fmt(toMin(e.time))}`,"",`📍 *Venue*: ${e.venue}, PVR INOX`,"");
+  L.push(`⏰ *Time*: ${B(fmt(toMin(e.time)))}`,"",`📍 *Venue*: ${e.venue}, PVR INOX`,"");
   if(e.people.length) L.push("*🌟 On the Red Carpet:*","",...e.people.map(p=>`• ${p}`),"");
   L.push("📸 All media delegates are requested to assemble at the venue on time to capture the Red Carpet moments.","","🎤 Team IFFI 🎬");
   return L.join("\n");
 }
 function mcBlock(e,i){
   const s=toMin(e.time), en=e.end?toMin(e.end):s+90;
-  const L=[`${i}. ${e.label}`,"",`🎥 Topic: ${e.title}`,"",`${clock(s)} Time: ${fmt(s)} – ${fmt(en)}`,"",`📍 Venue: ${e.venue}`,"",
+  const L=[`${i}. ${B(e.label)}`,"",`🎥 Topic: ${B(e.title)}`,"",`${clock(s)} Time: ${B(`${fmt(s)} – ${fmt(en)}`)}`,"",`📍 Venue: ${e.venue}`,"",
     `🎤 ${e.people.length>1?"Speakers":"Speaker"}: ${e.people.join(", ")}`];
   if(e.moderator) L.push("",`🎙️ Moderator: ${e.moderator}`);
   return L.join("\n");
@@ -207,14 +249,17 @@ function msgMC(list){
     "Please find below the schedule of masterclasses and special sessions:","",
     list.map((e,i)=>mcBlock(e,i+1)).join("\n\n")].join("\n");
 }
+/* preview shows WhatsApp formatting: *bold* */
+const waHTML = t => esc(t).replace(/\*([^*\n]+?)\*/g,"<b>$1</b>");
 
 /* ===================== state & render ===================== */
-let dayIdx = Math.max(0, DAYS.findIndex(d=>d.id===todayISO())); if(dayIdx<0) dayIdx=DAYS.length-1;
+function todayISO(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
+let dayIdx = DAYS.findIndex(d=>d.id===todayISO()); if(dayIdx<0) dayIdx=DAYS.length-1;
 let filter = "all";
 const openSet = new Set();
-function todayISO(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
 const day = () => DAYS[dayIdx];
 const key = (e,i,what) => `iffi57:${day().id}:${i}:${what}`;
+const titleOf = e => e.parts ? e.parts.map(p=>p.title).join(" + ") : e.title;
 
 function messageFor(e,i){
   if(e.type==="pc") return msgPC(e, store.get(key(e,i,"link"),""));
@@ -225,7 +270,7 @@ function messageFor(e,i){
 function render(){
   const d=day();
   document.getElementById("sub").textContent = `${d.label} · ${d.date}`;
-  document.getElementById("days").innerHTML = DAYS.map((x,i)=>`<button class="${i===dayIdx?"on":""}" data-day="${i}">${x.label} · ${x.date.split(",")[1]||x.date}</button>`).join("");
+  document.getElementById("days").innerHTML = DAYS.map((x,i)=>`<button class="${i===dayIdx?"on":""}" data-day="${i}">${x.label} · ${(x.date.split(",")[1]||x.date).trim()}</button>`).join("");
   document.getElementById("days").style.display = DAYS.length>1?"flex":"none";
 
   const counts={all:d.events.length,pc:0,rc:0,mc:0}; d.events.forEach(e=>counts[e.type]++);
@@ -235,20 +280,20 @@ function render(){
   const isToday = d.id===todayISO();
   const now = new Date(); const nowMin = now.getHours()*60+now.getMinutes();
 
-  // group by time
   const groups={};
   d.events.forEach((e,i)=>{ if(filter!=="all"&&filter!==e.type) return; (groups[e.time]=groups[e.time]||[]).push([e,i]); });
 
   let html="";
   const mcs=d.events.filter(e=>e.type==="mc");
   if(mcs.length>1 && (filter==="all"||filter==="mc")){
+    const all=msgMC(mcs), op=openSet.has("all");
     html+=`<div class="slot"><div class="time">Morning<small>all sessions</small></div><div class="cards">
-      <div class="card all" data-all="1"><span class="tag">All masterclasses · one message</span>
-      <h3>Masterclasses &amp; Special Sessions</h3><div class="meta">${mcs.length} sessions · send with the 8:00 AM / 11:30 AM bulletins</div>
+      <div class="card all ${op?"open":""}" data-all="1"><span class="tag">All sessions · one message</span>
+      <h3>Masterclasses &amp; Special Sessions</h3><div class="meta">${mcs.length} sessions at Kala Academy · send with the 8:00 AM / 11:30 AM bulletins</div>
       <div class="actions"><button class="btn copy" data-copyall="1">📋 Copy message</button>
-      <a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(msgMC(mcs))}">WhatsApp</a>
-      <button class="btn ghost" data-toggle="1">Preview</button></div>
-      <pre class="msg">${esc(msgMC(mcs))}</pre></div></div></div>`;
+      <a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(all)}">WhatsApp</a>
+      <button class="btn ghost" data-toggle="1">${op?"Hide":"Preview"}</button></div>
+      <pre class="msg">${waHTML(all)}</pre></div></div></div>`;
   }
 
   Object.keys(groups).sort((a,b)=>toMin(a)-toMin(b)).forEach(t=>{
@@ -263,26 +308,28 @@ function render(){
       const slot = e.end?`${fmt(s)} – ${fmt(toMin(e.end))}`:fmt(s);
       const venue = e.type==="pc"?"PC Hall, INOX Panjim":e.type==="rc"?`${e.venue}, PVR INOX`:e.venue;
       const sub = e.type==="pc"&&e.lang?` · ${e.lang}`:"";
-      const names = e.films? `<b>Films:</b> ${e.films.map(esc).join(", ")}` :
-                   e.people.length? e.people.map(esc).join("<br>") : `<span class="meta">No names on the poster</span>`;
-      const msg=messageFor(e,i);
-      html+=`<div class="card ${e.type} ${past?"past":""} ${u1&&u2?"done":""} ${openSet.has(i)?"open":""}" data-i="${i}">
+      const names = e.parts ? e.parts.map(p=>`<b>${esc(p.title)}</b><br>${p.people.map(esc).join("<br>")}`).join("<br>")
+                  : e.films ? `<b>Films:</b> ${e.films.map(esc).join(", ")}`
+                  : e.people.length ? e.people.map(esc).join("<br>") : `<span class="meta">No names on the poster</span>`;
+      const mod = e.moderator?`<br><span class="meta">Moderator: ${esc(e.moderator)}</span>`:"";
+      const msg=messageFor(e,i), op=openSet.has(i), link=store.get(key(e,i,"link"),"");
+      html+=`<div class="card ${e.type} ${past?"past":""} ${u1&&u2?"done":""} ${op?"open":""}" data-i="${i}">
         <span class="tag">${e.type==="mc"?esc(e.kind||T.name):T.name}</span>
-        <h3>${e.films?"MIFF Films":esc(e.title)}</h3>
-        <div class="meta">${slot} · ${esc(venue)} · ${esc(e.section||"")}${esc(sub)}</div>
-        <div class="people">${names}</div>
+        <h3>${esc(titleOf(e))}</h3>
+        <div class="meta">${slot} · ${esc(venue)}${e.section?" · "+esc(e.section):""}${esc(sub)}</div>
+        <div class="people">${names}${mod}</div>
         <div class="upd">
           <label class="${due1?"due":""}"><input type="checkbox" data-u="u1" ${u1?"checked":""}>1st · ${fmtShort(s-30)}–${fmtShort(s-20)}</label>
           <label class="${due2?"due":""}"><input type="checkbox" data-u="u2" ${u2?"checked":""}>2nd · ${fmtShort(s-5)}</label>
         </div>
-        ${e.type==="pc"?`<div class="link"><input type="url" placeholder="Paste YouTube live link" value="${esc(store.get(key(e,i,"link"),""))}" data-link></div>`:""}
+        ${e.type==="pc"?`<div class="link"><input type="url" placeholder="Paste YouTube live link" value="${esc(link)}" data-link></div>`:""}
         <div class="actions">
           <button class="btn copy" data-copy>📋 Copy message</button>
           <a class="btn wa" target="_blank" rel="noopener" data-wa href="https://wa.me/?text=${encodeURIComponent(msg)}">WhatsApp</a>
-          <button class="btn ghost" data-toggle>${openSet.has(i)?"Hide":"Preview"}</button>
+          <button class="btn ghost" data-toggle>${op?"Hide":"Preview"}</button>
         </div>
-        ${e.type==="pc"&&!store.get(key(e,i,"link"),"")?`<div class="warn">Live link not added yet</div>`:""}
-        <pre class="msg">${esc(msg)}</pre>
+        ${e.type==="pc"&&!link?`<div class="warn">Live link not added yet</div>`:""}
+        <pre class="msg">${waHTML(msg)}</pre>
       </div>`;
     });
     html+=`</div></div>`;
@@ -304,35 +351,37 @@ function updateNext(){
   const now=new Date(), n=now.getHours()*60+now.getMinutes();
   const tasks=[];
   d.events.forEach((e,i)=>{ const s=toMin(e.time);
-    if(!store.get(key(e,i,"u1"),false)) tasks.push({at:s-30,what:"1st update",e});
-    if(!store.get(key(e,i,"u2"),false)) tasks.push({at:s-5,what:"2nd update",e}); });
-  const live=tasks.filter(t=>t.at+ (t.what==="1st update"?10:5) >= n).sort((a,b)=>a.at-b.at)[0];
+    if(!store.get(key(e,i,"u1"),false)) tasks.push({at:s-30,end:s-20,what:"1st update",e});
+    if(!store.get(key(e,i,"u2"),false)) tasks.push({at:s-5,end:s,what:"2nd update",e}); });
+  const live=tasks.filter(t=>t.end>=n).sort((a,b)=>a.at-b.at)[0];
   if(!live){ box.innerHTML=""; return; }
-  const name = live.e.films?"MIFF Films":live.e.title;
   const when = live.at<=n ? "now" : `at ${fmt(live.at)}`;
-  box.innerHTML=`<div class="box"><span class="dot"></span><span><b>Next:</b> ${live.what} for <b>${esc(name)}</b> (${TYPES[live.e.type].name}) — ${when}</span></div>`;
+  box.innerHTML=`<div class="box"><span class="dot"></span><span><b>Next:</b> ${live.what} for <b>${esc(titleOf(live.e))}</b> (${TYPES[live.e.type].name}) — ${when}</span></div>`;
 }
 
 /* ===================== copy ===================== */
 function copyText(txt, btn){
   const done=()=>{ toast("Copied — paste it in WhatsApp"); if(btn){ const o=btn.innerHTML; btn.classList.add("ok"); btn.innerHTML="✓ Copied"; setTimeout(()=>{btn.classList.remove("ok");btn.innerHTML=o;},1600);} };
-  if(navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(txt).then(done).catch(()=>fallback(txt)&&done()); }
+  if(navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(txt).then(done).catch(()=>{ if(fallback(txt)) done(); }); }
   else if(fallback(txt)) done();
 }
 function fallback(txt){
   const ta=document.createElement("textarea"); ta.value=txt; ta.style.position="fixed"; ta.style.opacity="0";
   document.body.appendChild(ta); ta.select(); let ok=false; try{ ok=document.execCommand("copy"); }catch(e){} ta.remove();
-  if(!ok) toast("Copy blocked — use Preview and copy by hand"); return ok;
+  if(!ok) toast("Copy blocked — open Preview and copy by hand"); return ok;
 }
 let tt; function toast(t){ const el=document.getElementById("toast"); el.textContent=t; el.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove("show"),1800); }
 
 /* ===================== events ===================== */
 document.addEventListener("click",ev=>{
-  const t=ev.target.closest("button,[data-day]"); if(!t) return;
-  if(t.dataset.day){ dayIdx=+t.dataset.day; render(); return; }
+  const t=ev.target.closest("button"); if(!t) return;
+  if(t.dataset.day!==undefined){ dayIdx=+t.dataset.day; openSet.clear(); render(); window.scrollTo({top:0,behavior:"smooth"}); return; }
   if(t.dataset.f){ filter=t.dataset.f; render(); return; }
   const card=t.closest(".card"); if(!card) return;
-  if(t.hasAttribute("data-toggle")){ card.classList.toggle("open"); const op=card.classList.contains("open"); t.textContent=op?"Hide":"Preview"; if(card.dataset.i!==undefined){ op?openSet.add(+card.dataset.i):openSet.delete(+card.dataset.i);} return; }
+  if(t.hasAttribute("data-toggle")){
+    const id = card.dataset.all ? "all" : +card.dataset.i;
+    card.classList.toggle("open"); const op=card.classList.contains("open");
+    t.textContent=op?"Hide":"Preview"; op?openSet.add(id):openSet.delete(id); return; }
   if(t.dataset.copyall){ copyText(msgMC(day().events.filter(e=>e.type==="mc")),t); return; }
   if(t.hasAttribute("data-copy")){ const i=+card.dataset.i; copyText(messageFor(day().events[i],i),t); }
 });
@@ -345,7 +394,7 @@ document.addEventListener("input",ev=>{
   const card=t.closest(".card"), i=+card.dataset.i, e=day().events[i];
   store.set(key(e,i,"link"),t.value.trim());
   const msg=messageFor(e,i);
-  card.querySelector("pre.msg").textContent=msg;
+  card.querySelector("pre.msg").innerHTML=waHTML(msg);
   card.querySelector("[data-wa]").href="https://wa.me/?text="+encodeURIComponent(msg);
   const w=card.querySelector(".warn"); if(w) w.style.display=t.value.trim()?"none":"";
 });
