@@ -184,6 +184,18 @@ const DAYS = [
     {time:"18:00", type:"rc", title:"Sev Micchar", section:"Indian Panorama", venue:"Audi 2", people:["Muskan Asthana"]},
     {time:"18:15", type:"rc", title:"Chennai Love Story", section:"Indian Panorama", venue:"Audi 3", people:["Ravi Varma Namburi"]}
   ]
+},
+{
+  id: "2026-11-28", label: "Day 8", date: "Saturday, 28 November 2026",
+  events: [
+    {time:"10:30", type:"rc", title:"Health Centre", section:"Goan", venue:"Audi 3", people:["Anup Sardesai – Director"]},
+    {time:"11:00", end:"11:30", type:"pc", title:"A Family", section:"International Cinema", country:"Netherlands, Belgium", people:["Mees Peijnenburg – Director","Pieter Embrechts – Actor"]},
+    {time:"11:00", type:"rc", title:"OTT Preview Committee", notFilm:true, section:"Indian Panorama", venue:"Audi 1", people:[]},
+    {time:"11:30", end:"12:00", type:"pc", title:"Best Web Series Jury", section:"Indian Panorama", team:"the Best Web Series Jury", people:["JD Majethia – Jury Chairman","Shailendra Jha – Jury","Krishna Hebbale – Jury","Garima Wahal – Jury"]},
+    {time:"12:00", end:"12:30", type:"pc", title:"Hanuman Ansh", section:"Indian Panorama", lang:"Hindi", people:["Dr. Vishal Chaturvedi – Director"]},
+    {time:"12:30", end:"13:00", type:"pc", title:"We Are All Strangers", section:"International Cinema", country:"Singapore", people:["Regene Lim – Actress","Koh Jia Ler – Actor"]},
+    {time:"13:15", type:"rc", title:"We Are All Strangers", section:"International Films", venue:"Audi 1", people:["Koh Jia Ler","Regene Lim"]}
+  ]
 }
 ];
 /* ===================== helpers ===================== */
@@ -216,7 +228,7 @@ function msgPC(e, link){
       `🎬 Session: ${B(e.title)}`,"",`${clock(s)} Time: ${B(when)}`,"","👥 Panelists:","",...e.people.map(p=>`- ${p}`));
   } else {
     L.push(`A press conference featuring the team of “${B(e.title)}” under the ${e.section} section is scheduled as follows:`,"",
-      `🎬 Film: ${B(e.title)}`,`🌐 Language: ${e.lang}`,"",`${clock(s)} Time: ${B(when)}`,"","👥 Panelists:","",...e.people.map(p=>`- ${p}`));
+      `🎬 Film: ${B(e.title)}`,(e.lang?`🌐 Language: ${e.lang}`:`🌍 Country: ${e.country}`),"",`${clock(s)} Time: ${B(when)}`,"","👥 Panelists:","",...e.people.map(p=>`- ${p}`));
   }
   L.push("",`All media delegates are invited to attend the press conference and interact with the ${e.team?"jury":"film's team"}.`,"",
     " *Watch live* ", link || "[PASTE LIVE LINK]","","","Team IFFI 2026");
@@ -229,8 +241,9 @@ function msgRC(e){
     L.push(`You are cordially invited to cover the Red Carpet of the films ${list.join(", ")} and ${last} under the ${e.section} section at the 57th International Film Festival of India (IFFI).`,"",
       `🎞️ *Films*: ${B(e.films.join(", "))}`,"");
   } else {
-    L.push(`You are cordially invited to cover the Red Carpet of the film ‘${B(e.title)}’ under the ${e.section} section at the 57th International Film Festival of India (IFFI).`,"",
-      `🎞️ *Film*: ${B(e.title)}`,"");
+    const w = e.notFilm ? "" : "the film ";
+    L.push(`You are cordially invited to cover the Red Carpet of ${w}‘${B(e.title)}’ under the ${e.section} section at the 57th International Film Festival of India (IFFI).`,"",
+      `🎞️ *${e.notFilm?"Event":"Film"}*: ${B(e.title)}`,"");
   }
   L.push(`⏰ *Time*: ${B(fmt(toMin(e.time)))}`,"",`📍 *Venue*: ${e.venue}, PVR INOX`,"");
   if(e.people.length) L.push("*🌟 On the Red Carpet:*","",...e.people.map(p=>`• ${p}`),"");
@@ -307,7 +320,7 @@ function render(){
       const due2 = isToday && !u2 && nowMin>=s-5 && nowMin<=s;
       const slot = e.end?`${fmt(s)} – ${fmt(toMin(e.end))}`:fmt(s);
       const venue = e.type==="pc"?"PC Hall, INOX Panjim":e.type==="rc"?`${e.venue}, PVR INOX`:e.venue;
-      const sub = e.type==="pc"&&e.lang?` · ${e.lang}`:"";
+      const sub = e.type==="pc"&&(e.lang||e.country)?` · ${e.lang||e.country}`:"";
       const names = e.parts ? e.parts.map(p=>`<b>${esc(p.title)}</b><br>${p.people.map(esc).join("<br>")}`).join("<br>")
                   : e.films ? `<b>Films:</b> ${e.films.map(esc).join(", ")}`
                   : e.people.length ? e.people.map(esc).join("<br>") : `<span class="meta">No names on the poster</span>`;
